@@ -24,8 +24,13 @@ class WorkInTime():
     def relax(self):
         timeNow = time.time()
         timeBucket = self.__timeType
-        if (timeNow > timeBucket[-1][1]):      #大于一天终止时间
+        if (timeNow > timeBucket[1][-1]):      #大于一天终止时间
             sleepTime = round(timeBucket[0][0] - timeNow + 24 * 60 * 60, 0)
+            #print('timeBegin:' + str(time.asctime(time.localtime(timeBucket[0][0]))))
+            #print('sleepTime' + str(sleepTime))
+            #print('timeNow' + time.strftime('%H:%M:%S',time.localtime(time.time())))
+            if (sleepTime < 0):
+                return
             time.sleep(sleepTime+self.__addTime)
             self.__newday = True
         elif timeNow < timeBucket[0][0]:      #小于一天开始时间
