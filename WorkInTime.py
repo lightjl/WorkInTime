@@ -20,11 +20,19 @@ class WorkInTime():
     def changeRelaxTime(self, relaxTime):
         self.__relaxTime = relaxTime    #休息时间
 
+    def __resetTime(self):
+        now = datetime.now()
+        self.__timeType = [[time.mktime(time.strptime(str(now.year) + '-' + str(now.month) + '-' + str(now.day) +\
+                            ' ' + i + ':00', '%Y-%m-%d %H:%M:%S')) for i in timeB] for timeB in self.__time[:]
+                         ]
+
     # timeTrade = [['9:29', '11:30'], ['13:00', '15:00']]
     def relax(self):
+        if self.isNewDay():
+            self.__resetTime()
         timeNow = time.time()
         timeBucket = self.__timeType
-        if (timeNow > timeBucket[1][-1]):      #大于一天终止时间
+        if (timeNow > timeBucket[-1][-1]):      #大于一天终止时间
             sleepTime = round(timeBucket[0][0] - timeNow + 24 * 60 * 60, 0)
             #print('timeBegin:' + str(time.asctime(time.localtime(timeBucket[0][0]))))
             #print('sleepTime' + str(sleepTime))
@@ -47,5 +55,3 @@ class WorkInTime():
 
     def isNewDay(self):
         return self.__newday
-
-
