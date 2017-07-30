@@ -45,7 +45,7 @@ class WorkInTime():
 
     # timeTrade = [['9:29', '11:30'], ['13:00', '15:00']]
     def relax(self):
-        relaxDay()  #relaxDay
+        self.relaxDay()  #relaxDay
         if self.isNewDay():
             self.__resetTime()
         timeNow = time.time()
