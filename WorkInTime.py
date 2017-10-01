@@ -50,7 +50,7 @@ class WorkInTime():
             timeNow = time.time()
             #logging.debug(name)
             working = False
-            if (timeNow > timeBucket[-1][-1]):      #大于一天终止时间
+            if (timeNow > timeBucket[-1][1]):      #大于一天终止时间
                 logging.debug(name + '大于一天终止时间 time relax')
                 time.sleep(self.sleep_time)
                 logging.debug(name + '大于一天终止时间 time out')
@@ -69,7 +69,7 @@ class WorkInTime():
                            #工作区
                         working = True
                         break
-                if(timeNow >= timeBucket[0][-1]and timeNow <= timeBucket[-1][-1]):
+                if(timeNow >= timeBucket[-1][0]and timeNow <= timeBucket[-1][1]):
                        #最后一个工作区
                     working = True
             if(working):
