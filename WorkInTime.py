@@ -43,11 +43,12 @@ class WorkInTime():
             time.sleep(self.sleep_time)
 
     # timeTrade = [['9:29', '11:30'], ['13:00', '15:00']]
-    def relax(self, alive):
+    def relax(self, alive, name=''):
         self.relaxDay(alive)  #relaxDay
         timeBucket = self.__timeType
         while alive.value:
             timeNow = time.time()
+            logging.info(name)
             working = False
             if (timeNow > timeBucket[-1][-1]):      #大于一天终止时间
                 logging.info('大于一天终止时间 time relax')
@@ -69,8 +70,8 @@ class WorkInTime():
                         break
             if(working):
                 break
+        relaxTime = self.__relaxTime
         while alive.value:
-            relaxTime = self.__relaxTime
             time.sleep(self.sleep_time)
             relaxTime -= self.sleep_time
             if(relaxTime < 0):
