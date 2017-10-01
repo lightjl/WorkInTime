@@ -48,34 +48,37 @@ class WorkInTime():
         timeBucket = self.__timeType
         while alive.value:
             timeNow = time.time()
-            logging.info(name)
+            #logging.debug(name)
             working = False
             if (timeNow > timeBucket[-1][-1]):      #大于一天终止时间
-                logging.info('大于一天终止时间 time relax')
+                logging.debug(name + '大于一天终止时间 time relax')
                 time.sleep(self.sleep_time)
-                logging.info('大于一天终止时间 time out')
+                logging.debug(name + '大于一天终止时间 time out')
                 self.__resetTime()
             elif timeNow < timeBucket[0][0]:      #小于一天开始时间
-                logging.info('小于一天开始时间 time relax')
+                logging.debug(name + '小于一天开始时间 time relax')
                 time.sleep(self.sleep_time)
-                logging.info('小于一天开始时间 time out')
+                logging.debug(name + '小于一天开始时间 time out')
             else:
                 for i in range(len(timeBucket)-1)[::-1]:
                     if (timeNow > timeBucket[i][1] and timeNow < timeBucket[i+1][0]):
-                        logging.info('中场 time relax')
+                        logging.debug(name + '中场 time relax')
                         time.sleep(self.sleep_time)
-                        logging.info('中场 time out')
-                    else:
+                        logging.debug(name + '中场 time out')
+                    elif (timeNow <= timeBucket[i][1] and timeNow >= timeBucket[i][0]):
+                           #工作区
                         working = True
                         break
             if(working):
                 break
         relaxTime = self.__relaxTime
+        logging.debug(name + 'work relax')
         while alive.value:
             time.sleep(self.sleep_time)
             relaxTime -= self.sleep_time
             if(relaxTime < 0):
                 break
+        logging.debug(name + 'working')
 
 
 '''
