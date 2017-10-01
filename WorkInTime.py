@@ -69,6 +69,9 @@ class WorkInTime():
                            #工作区
                         working = True
                         break
+                if(timeNow >= timeBucket[0][-1]and timeNow <= timeBucket[-1][-1]):
+                       #最后一个工作区
+                    working = True
             if(working):
                 break
         relaxTime = self.__relaxTime
