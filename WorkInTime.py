@@ -55,6 +55,7 @@ class WorkInTime():
                 time.sleep(self.sleep_time)
                 logging.debug(name + '大于一天终止时间 time out')
                 self.__resetTime()
+                timeBucket = self.__timeType
             elif timeNow < timeBucket[0][0]:      #小于一天开始时间
                 logging.debug(name + '小于一天开始时间 time relax')
                 time.sleep(self.sleep_time)
