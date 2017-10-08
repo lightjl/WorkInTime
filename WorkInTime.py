@@ -46,6 +46,7 @@ class WorkInTime():
     def relax(self, alive, name=''):
         self.relaxDay(alive)  #relaxDay
         timeBucket = self.__timeType
+        fromRelaxFlag = False
         while alive.value:
             timeNow = time.time()
             #logging.debug(name)
@@ -60,17 +61,19 @@ class WorkInTime():
                 logging.debug(name + '小于一天开始时间 time relax')
                 time.sleep(self.sleep_time)
                 logging.debug(name + '小于一天开始时间 time out')
+                fromRelaxFlag = True
             else:
                 for i in range(len(timeBucket)-1)[::-1]:
                     if (timeNow > timeBucket[i][1] and timeNow < timeBucket[i+1][0]):
                         logging.debug(name + '中场 time relax')
                         time.sleep(self.sleep_time)
                         logging.debug(name + '中场 time out')
+                        fromRelaxFlag = True
                     elif (timeNow <= timeBucket[i][1] and timeNow >= timeBucket[i][0]):
                            #工作区
                         working = True
                         break
-                if(timeNow >= timeBucket[-1][0]and timeNow <= timeBucket[-1][1]):
+                if(timeNow >= timeBucket[-1][0] and timeNow <= timeBucket[-1][1]):
                        #最后一个工作区
                     working = True
             if(working):
@@ -78,6 +81,8 @@ class WorkInTime():
         relaxTime = self.__relaxTime
         logging.debug(name + 'work relax')
         while alive.value:
+            if fromRelaxFlag:   # 睡毛线，起来工作
+                break
             time.sleep(self.sleep_time)
             relaxTime -= self.sleep_time
             if(relaxTime < 0):
