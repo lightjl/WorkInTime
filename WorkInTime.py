@@ -85,6 +85,7 @@ class WorkInTime():
                 break
             time.sleep(self.sleep_time)
             relaxTime -= self.sleep_time
+            logging.debug(name + 'work relaxtime: ' + str(relaxTime))
             if(relaxTime < 0):
                 break
         logging.debug(name + 'working')
